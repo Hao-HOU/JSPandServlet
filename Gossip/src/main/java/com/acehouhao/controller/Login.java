@@ -24,11 +24,12 @@ public class Login extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String page = ERROR_VIEW;
         if (checkLogin(username, password)) {
-            req.getRequestDispatcher(SUCCESS_VIEW).forward(req, resp);
-        } else {
-            resp.sendRedirect(ERROR_VIEW);
+            req.getSession().setAttribute("login", username);
+            page = SUCCESS_VIEW;
         }
+        resp.sendRedirect(page);
     }
 
     private boolean checkLogin(String username, String password) throws IOException {

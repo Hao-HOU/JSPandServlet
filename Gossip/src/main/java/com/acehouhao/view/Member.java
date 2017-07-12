@@ -14,18 +14,38 @@ import java.io.PrintWriter;
  */
 @WebServlet("/member.view")
 public class Member extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = resp.getWriter();
+    private final String USERS = "E:/ztest/Gossip/users";
+    private final String LOGIN_VIEW = "index.html";
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        if (request.getSession().getAttribute("login") == null) {
+            response.sendRedirect(LOGIN_VIEW);
+            return;
+        }
+
+        String username = (String) request.getSession().getAttribute("login");
+
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>登录成功</title>");
+        out.println("<title>Gossip 微网志</title>");
+        out.println("<link rel='stylesheet' href='css/member.css' type='text/css'>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>会员 " + req.getParameter("username") + " 你好</h1>");
+        out.println("<h1>会员 " + request.getSession().getAttribute("login") + " 你好</h1>");
         out.println("</body>");
         out.println("</html>");
         out.close();
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
     }
 }
