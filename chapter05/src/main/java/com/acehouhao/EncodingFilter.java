@@ -10,10 +10,10 @@ import java.io.IOException;
  * FilterDemo
  * Created by Hao HOU on 2017/7/17.
  */
-@WebFilter(
-        urlPatterns = { "/*" },
-        initParams = { @WebInitParam(name = "ENCODING", value = "UTF-8")}
-)
+//@WebFilter(
+//        urlPatterns = { "/*" },
+//        initParams = { @WebInitParam(name = "ENCODING", value = "UTF-8")}
+//)
 public class EncodingFilter implements Filter {
     private String ENCODING;
 

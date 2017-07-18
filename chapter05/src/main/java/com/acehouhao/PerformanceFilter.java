@@ -8,7 +8,7 @@ import java.io.IOException;
  * 性能评测过滤器
  * Created by Hao HOU on 2017/7/17.
  */
-@WebFilter(filterName = "performance", urlPatterns = {"/*"})
+//@WebFilter(filterName = "performance", urlPatterns = {"/*"})
 public class PerformanceFilter implements Filter {
     private FilterConfig config;
 

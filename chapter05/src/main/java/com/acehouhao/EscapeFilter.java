@@ -9,7 +9,7 @@ import java.io.IOException;
  * FilterDemo
  * Created by Hao HOU on 2017/7/17.
  */
-@WebFilter("/*")
+//@WebFilter("/*")
 public class EscapeFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
