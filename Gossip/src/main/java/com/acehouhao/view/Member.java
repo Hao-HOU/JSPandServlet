@@ -1,5 +1,7 @@
 package com.acehouhao.view;
 
+import com.acehouhao.model.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,15 +18,8 @@ import java.util.*;
  */
 @WebServlet("/member.view")
 public class Member extends HttpServlet {
-    private final String USERS = "E:/ztest/Gossip/users";
-    private final String LOGIN_VIEW = "index.html";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        if (request.getSession().getAttribute("login") == null) {
-            response.sendRedirect(LOGIN_VIEW);
-            return;
-        }
 
         String username = (String) request.getSession().getAttribute("login");
 
@@ -60,7 +55,8 @@ public class Member extends HttpServlet {
         out.println("<tr><th><hr/></th></tr>");
         out.println("</thead>");
         out.println("<tbody>");
-        Map<Date, String> messages = readMessage(username);
+        UserService userService = (UserService) getServletContext().getAttribute("userService");
+        Map<Date, String> messages = userService.readMessage(username);
         DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.CHINA);
         for (Date date : messages.keySet()) {
             out.println("<tr><td style='vertical-align: top;'");
@@ -86,45 +82,5 @@ public class Member extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
-    }
-
-    private class TxtFilenameFilter implements FilenameFilter {
-        @Override
-        public boolean accept(File dir, String name) {
-            return name.endsWith(".txt");
-        }
-    }
-
-    private TxtFilenameFilter filenameFilter = new TxtFilenameFilter();
-
-    private class DateComparator implements Comparator<Date> {
-        @Override
-        public int compare(Date o1, Date o2) {
-            return -o1.compareTo(o2);
-        }
-    }
-
-    private DateComparator comparator = new DateComparator();
-
-    private Map<Date, String> readMessage(String username) throws IOException {
-        File border = new File(USERS + "/" + username);
-        String[] txts = border.list(filenameFilter);
-
-        Map<Date, String> messages = new TreeMap<>(comparator);
-        for (String txt : txts) {
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(USERS + "/" + username + "/" + txt), "UTF-8"));
-            String text = null;
-            StringBuilder builder = new StringBuilder();
-            while ((text = reader.readLine()) != null) {
-                builder.append(text);
-            }
-            Date date = new Date(
-                    Long.parseLong(txt.substring(0, txt.indexOf(".txt"))));
-            messages.put(date, builder.toString());
-            reader.close();
-        }
-        return messages;
     }
 }

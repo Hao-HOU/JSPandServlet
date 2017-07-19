@@ -1,6 +1,9 @@
 package com.acehouhao.controller;
 
+import com.acehouhao.model.UserService;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,25 +15,28 @@ import java.io.IOException;
  * 删除
  * Created by Hao HOU on 2017/7/12.
  */
-@WebServlet("/delete.do")
+@WebServlet(
+        urlPatterns = {"/delete.do"},
+        initParams = {
+                @WebInitParam(name = "SUCCESS_VIEW", value = "member.view")
+        }
+)
 public class Delete extends HttpServlet {
-    private final String USERS = "E:/ztest/Gossip/users";
-    private final String LOGIN_VIEW = "index.html";
-    private final String SUCCESS_VIEW = "member.view";
+    private String SUCCESS_VIEW;
+
+    @Override
+    public void init() throws ServletException {
+        SUCCESS_VIEW = getServletConfig().getInitParameter("SUCCESS_VIEW");
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession().getAttribute("login") == null) {
-            resp.sendRedirect(LOGIN_VIEW);
-            return;
-        }
+        UserService userService = (UserService) getServletContext().getAttribute("userService");
 
         String username = (String) req.getSession().getAttribute("login");
         String message = req.getParameter("message");
-        File file = new File(USERS + "/" + username + "/" + message + ".txt");
-        if (file.exists()) {
-            file.delete();
-        }
+        userService.deleteMessage(username, message);
+
         resp.sendRedirect(SUCCESS_VIEW);
     }
 }
