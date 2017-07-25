@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet(
         urlPatterns = {"/delete.do"},
         initParams = {
-                @WebInitParam(name = "SUCCESS_VIEW", value = "member.view")
+                @WebInitParam(name = "SUCCESS_VIEW", value = "member.jsp")
         }
 )
 public class Delete extends HttpServlet {

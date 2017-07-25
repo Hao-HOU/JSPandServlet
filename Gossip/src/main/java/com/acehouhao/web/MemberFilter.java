@@ -11,7 +11,7 @@ import java.io.IOException;
  * Created by Hao HOU on 2017/7/19.
  */
 @WebFilter(
-        urlPatterns = { "/delete.do", "/logout.do", "/message.do", "/member.view" },
+        urlPatterns = { "/delete.do", "/logout.do", "/message.do", "/member.jsp" },
         initParams = {
                 @WebInitParam(name = "LOGIN_VIEW", value = "index.html")
         }
