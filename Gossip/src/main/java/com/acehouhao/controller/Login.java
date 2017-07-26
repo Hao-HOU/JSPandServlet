@@ -20,8 +20,8 @@ import java.io.IOException;
 @WebServlet(
         urlPatterns = {"/login.do"},
         initParams = {
-                @WebInitParam(name = "SUCCESS_VIEW", value = "member.jsp"),
-                @WebInitParam(name = "ERROR_VIEW", value = "index.html")
+                @WebInitParam(name = "SUCCESS_VIEW", value = "message.do"),
+                @WebInitParam(name = "ERROR_VIEW", value = "index.jsp")
         }
 )
 public class Login extends HttpServlet{
@@ -45,6 +45,9 @@ public class Login extends HttpServlet{
         if (userService.checkLogin(username, password)) {
             req.getSession().setAttribute("login", username);
             page = SUCCESS_VIEW;
+        } else {
+            req.setAttribute("error", "名称或密码错误");
+            page = ERROR_VIEW;
         }
         resp.sendRedirect(page);
     }
