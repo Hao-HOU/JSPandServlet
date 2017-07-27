@@ -29,10 +29,11 @@
             <tbody>
             <c:forEach var="blah" items="${ requestScope.blahs }">
                 <tr>
-                    <td style="vertical-align: top;">${ blah.username }</td><br/>
+                    <td style="vertical-align: top;">${ blah.username }<br/>
                     <c:out value="${ blah.txt }"/><br/>
                     <fmt:formatDate value="${ blah.date }" type="both" dateStyle="full" timeStyle="full"/>
                     <hr/>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -40,7 +41,7 @@
         <hr style="width: 100%; height: 1px;"/>
     </c:when>
     <c:otherwise>
-        <h1 style="color: rgb(255, 0, 0);">${ requestScope.username } 使用者不存在！</h1>
+        <h1 style="color: rgb(255, 0, 0);">${ requestScope.username } 用户不存在！</h1>
     </c:otherwise>
 </c:choose>
 </body>

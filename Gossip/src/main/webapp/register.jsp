@@ -1,4 +1,6 @@
-<%@ page import="java.util.List" %><%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.List" %>
+<%--
   User: Hao HOU
   Date: 2017/7/26
   Time: 10:22
@@ -10,25 +12,14 @@
     <title>Gossip 微博</title>
 </head>
 <body>
-<%
-    List<String> errors = (List<String>) request.getAttribute("errors");
-    if (errors != null) {
-%>
-<h1>新增会员失败</h1>
-<ul style="color: rgb(255, 0, 0);">
-    <%
-        for (String error : errors) {
-    %>
-    <li><%= error %>
-    </li>
-    <%
-        }
-    %>
-</ul>
-<br/>
-<%
-    }
-%>
+<c:if test="${ requestScope.errors != null }">
+    <h1>新增会员失败</h1>
+    <ul style="color: red;">
+        <c:forEach var="error" items="${ requestScope.errors }">
+            <li>${ error }</li>
+        </c:forEach>
+    </ul>
+</c:if>
 <h1>会员注册</h1>
 <form method="post" action="register.do">
     <table bgcolor="#cccccc">
