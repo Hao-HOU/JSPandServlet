@@ -8,6 +8,7 @@ import java.util.*;
  */
 public class UserService {
     private String USERS;
+    private LinkedList<Blah> newest = new LinkedList<>();
 
     public UserService(String USERS) {
         this.USERS = USERS;
@@ -134,6 +135,11 @@ public class UserService {
                 new FileOutputStream(file), "UTF-8"));
         writer.write(blah.getTxt());
         writer.close();
+
+        newest.addFirst(blah);
+        if (newest.size() > 20) {
+            newest.removeLast();
+        }
     }
 
     public void deleteBlah(Blah blah) {
@@ -141,5 +147,10 @@ public class UserService {
         if (file.exists()) {
             file.delete();
         }
+        newest.remove(blah);
+    }
+
+    public LinkedList<Blah> getNewest() {
+        return newest;
     }
 }

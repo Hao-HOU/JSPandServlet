@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="acehouhao" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <html>
@@ -17,6 +20,7 @@
         <li>分享信息也可以</li>
         <li>随意写写表心情</li>
     </ul>
+    <acehouhao:Blahs/>
 </div>
 <div>
 <a href="register.jsp">还不是会员？</a>
