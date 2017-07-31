@@ -22,7 +22,7 @@
                 ${ blah.username }<br/>
                 <c:out value="${ blah.txt }"/><br/>
                 <fmt:formatDate value="${ blah.date }" type="both" dateStyle="full" timeStyle="full"/>
-                <c:if test="${ sessionScope.login != null }">
+                <c:if test="${ sessionScope.login == blah.username }">
                     <a href="delete.do?message=${ blah.date.time }">删除</a>
                 </c:if>
                 <hr/>
